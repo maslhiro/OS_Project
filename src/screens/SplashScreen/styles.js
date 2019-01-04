@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 import { scale, scaleVertical } from '../../utils';
-
+import {Splash} from '../../colors'
 
 export default styles = StyleSheet.create({
     container: {
@@ -21,17 +21,17 @@ export default styles = StyleSheet.create({
     },
     hero: {
       fontSize: 30,
-      color : '#222831'
+      color : Splash.text
     },
     appName: {
       fontSize: 54, 
-      color : '#222831',
+      color : Splash.text,
       fontWeight: '500',
   
     },
     progress: {
       alignSelf: 'center',
       marginBottom: 35,
-      backgroundColor: '#e5e5e5',
+      backgroundColor: Splash.bg_processBar,
     },
   });

@@ -8,7 +8,7 @@ export const Root = createStackNavigator(
         Splash: SplashScreen,
         Home: HomeScreen,
     }, {
-        initialRouteName: 'Splash',
+        initialRouteName: 'Home',
         navigationOptions: {
             header : null
         }

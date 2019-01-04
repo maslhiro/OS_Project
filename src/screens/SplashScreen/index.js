@@ -16,6 +16,7 @@ import {
 import {ProgressBar} from '../../components'
 import styles from './styles'
 import { scale, scaleVertical } from '../../utils';
+import {Splash} from '../../colors'
 
 const delay = 700;
 const uriImg = "https://i.pinimg.com/564x/8e/dc/d1/8edcd15480855eaf0f4a1bb9f319c95b.jpg"
@@ -71,7 +72,7 @@ export class SplashScreen extends Component {
         </View>
       </View>
       <ProgressBar
-        color="#393e46"
+        color={Splash.processBar}
         style={styles.progress}
         progress={this.state.progress}
         width={ scale(320)}
