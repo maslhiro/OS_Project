@@ -12,7 +12,9 @@ export class HomeScreen extends Component {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.touchHeader}>
+                <TouchableOpacity 
+                  onPress = {() => this.props.navigation.push("Menu")}
+                  style={styles.touchHeader}>
                   <Icon name="ios-menu" size={30} color="white"/>
                 </TouchableOpacity>
                 <View style={styles.viewHeader}>
@@ -27,11 +29,11 @@ export class HomeScreen extends Component {
               tabBarActiveTextColor={Home.scrollable}
               initialPage = {1}
               renderTabBar={() => <TabBar underlineColor={Home.scrollable} />}>
-              <Page tabLabel={{label: "Tháng Trước"}} label="Page #1"/>
-              <Page tabLabel={{label: "Tháng  Này", badge: 3}} label="Page #2 aka Long!"/>
-              <Page tabLabel={{label: "Tương Lai"}} label="Page #3"/>
-              <Page tabLabel={{label: "Page #4 aka Page"}} label="Page #4 aka Page"/>
-              <Page tabLabel={{label: "Page #5"}} label="Page #5"/>
+              <Page tabLabel={{label: "Tháng Trước"}} label="Page #1" props={this.props.navigation}/>
+              <Page tabLabel={{label: "Tháng  Này", badge: 3}} label="Page #2 aka Long!" props={this.props.navigation}/>
+              <Page tabLabel={{label: "Tương Lai"}} label="Page #3"  props={this.props.navigation}/>
+              <Page tabLabel={{label: "Page #4 aka Page"}} label="Page #4 aka Page"  props={this.props.navigation}/>
+              <Page tabLabel={{label: "Page #5"}} label="Page #5"  props={this.props.navigation}/>
             </ScrollableTabView>
 
             <TouchableOpacity 

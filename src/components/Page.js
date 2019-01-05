@@ -1,10 +1,13 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import {scale,scaleVertical} from '../utils'
 
-export const Page = ({ label }) => (
-    <View style={{ flex: 1 }}>
-        <View style={{ margin: 10, backgroundColor: '#eeeeee', height: 200, borderColor: '#222831', borderWidth: 0 }}>
+export const Page = ({ label, props = {} }) => (
+    <View style={{flex: 1}}>
+        <TouchableOpacity 
+            onPress={()=>{props.navigate("Statistics")}}
+            style={{ margin: 10, backgroundColor: '#eeeeee', height: scaleVertical(200), borderColor: '#222831', borderWidth: 0 }}>
             <View style={{ backgroundColor: 'transparent', flexDirection: 'row', flex: 2 }}>
                 <View style={{ flex: 4, backgroundColor: 'transparent' , padding:5, justifyContent:'center'}}>
                     <Text style={{ color: 'black', fontWeight: '300', fontSize: 18 }}>Tổng Quan</Text>
@@ -29,6 +32,6 @@ export const Page = ({ label }) => (
                     <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20 ,alignSelf:'center'}}> 360.000 đ </Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     </View>
 );
