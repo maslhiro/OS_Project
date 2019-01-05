@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Text, Dimensions, BackHandler} from 'react-native'
+import {View, Text, Dimensions, BackHandler, TouchableOpacity} from 'react-native'
 import {
   LineChart,
   BarChart,
@@ -7,12 +7,12 @@ import {
   ProgressChart,
   ContributionGraph
 } from 'react-native-chart-kit'
-
+import Icon from 'react-native-vector-icons/Ionicons'
 import {
   StackActions,
   NavigationActions,
 } from 'react-navigation';
-
+import styles from './styles'
 const data = [
   { name: 'Seoul', population: 21500000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
   { name: 'Toronto', population: 2800000, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
@@ -46,9 +46,23 @@ export class StatisticsScreen  extends Component {
     componentWillUnmount() {
       this.backHandler.remove();
     }
+
   render() {
     return (
-     <View style={{padding:5}}>
+     <View style={{flex:1}}>
+      <View style={styles.header}>
+          <TouchableOpacity 
+            onPress={()=>this.toHome()}
+            style={[styles.touchHeader, { alignItems: 'flex-start', paddingLeft: 10 }]}>
+            <Icon name="md-arrow-dropleft" size={40} color="white" />
+          </TouchableOpacity>
+          <View style={styles.viewHeader}>
+            <Text style={styles.textHeader}>Statistics</Text>
+          </View>
+          <View style={styles.touchHeader}>
+
+          </View>
+        </View>
          <Text>Stattic</Text>
          <View>
          <LineChart

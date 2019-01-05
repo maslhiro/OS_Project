@@ -1,4 +1,4 @@
-import { HomeScreen,SplashScreen,StatisticsScreen, SettingScreen, MenuScreen } from '../screens'
+import { HomeScreen,SplashScreen,StatisticsScreen, SettingScreen, MenuScreen, AddTransScreen } from '../screens'
 
 import { createStackNavigator } from 'react-navigation'
 
@@ -9,7 +9,8 @@ export const Root = createStackNavigator(
         Home: HomeScreen,
         Statistics : StatisticsScreen,
         Setting : SettingScreen,
-        Menu: MenuScreen
+        Menu: MenuScreen,
+        AddTrans : AddTransScreen
     }, {
         initialRouteName: 'Splash',
         navigationOptions: {

@@ -95,7 +95,7 @@ export class SettingScreen extends Component {
             <Text style={styles.textHeader}>Jar Setting</Text>
           </View>
           <TouchableOpacity style={styles.touchHeader}>
-            <Icon name="ios-checkmark" size={40} color="white" />
+            <Icon name="ios-checkmark" size={50} color="white" />
           </TouchableOpacity>
         </View>
         {this.renderChart()}

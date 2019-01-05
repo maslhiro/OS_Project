@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet,Dimensions } from "react-native";
 import {scale, scaleModerate} from '../../utils'
-const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
+const {width, height} = Dimensions.get("window");
 
 export default styles = StyleSheet.create(
     {

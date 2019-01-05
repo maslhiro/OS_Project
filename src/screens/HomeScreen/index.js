@@ -29,15 +29,15 @@ export class HomeScreen extends Component {
               tabBarActiveTextColor={Home.scrollable}
               initialPage = {1}
               renderTabBar={() => <TabBar underlineColor={Home.scrollable} />}>
-              <Page tabLabel={{label: "Tháng Trước"}} label="Page #1" props={this.props.navigation}/>
-              <Page tabLabel={{label: "Tháng  Này", badge: 3}} label="Page #2 aka Long!" props={this.props.navigation}/>
-              <Page tabLabel={{label: "Tương Lai"}} label="Page #3"  props={this.props.navigation}/>
+              <Page tabLabel={{label: "Last Month"}} label="Page #1" props={this.props.navigation}/>
+              <Page tabLabel={{label: "This Month", badge: 3}} label="Page #2 aka Long!" props={this.props.navigation}/>
+              <Page tabLabel={{label: "Future"}} label="Page #3"  props={this.props.navigation}/>
               <Page tabLabel={{label: "Page #4 aka Page"}} label="Page #4 aka Page"  props={this.props.navigation}/>
               <Page tabLabel={{label: "Page #5"}} label="Page #5"  props={this.props.navigation}/>
             </ScrollableTabView>
 
             <TouchableOpacity 
-              onPress={()=>{}}
+              onPress={()=>{this.props.navigation.push("AddTrans")}}
               style={styles.touchAdd}>
                   <Icon name="ios-add" size={30} color="white"/>
             </TouchableOpacity>
