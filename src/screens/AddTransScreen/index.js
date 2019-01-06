@@ -48,8 +48,6 @@ export class AddTransScreen extends Component {
             <View
               style={{ flexDirection: 'row', marginRight: 5, marginLeft: 15, backgroundColor: 'white' }}
             >
-           
-
             </View>
 
             <FormLabel labelStyle={{ fontSize: 16, color: "#393e46" }}>Date</FormLabel>
