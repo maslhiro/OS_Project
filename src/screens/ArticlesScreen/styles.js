@@ -3,6 +3,7 @@ import React, {
   } from 'react';
   import {
     StyleSheet,
+    Dimensions
   } from 'react-native';
   
   import {
@@ -10,23 +11,26 @@ import React, {
     scaleVertical
   } from '../../utils';
   import {
-    Home
+    colorHome
   } from '../../colors'
   
+  let {height, width} = Dimensions.get("window")
+
+
   export default styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'white',
-      justifyContent: 'flex-end'
+      backgroundColor: '#eeeeee',
+      // justifyContent: 'flex-end'
     },
     header: {
       height: 65,
-      backgroundColor: Home.header,
+      backgroundColor: colorHome.header,
       justifyContent: 'center',
       flexDirection: 'row'
     },
     textHeader: {
-      color: Home.textHeader,
+      color: colorHome.textHeader,
       fontWeight: '300',
       fontSize: 20
     },
@@ -41,5 +45,10 @@ import React, {
       backgroundColor: 'transparent',
       justifyContent: 'center',
       alignItems: 'center'
+    },
+    imageItem : {
+      height : scaleVertical(height*32/100),
+      width : scale(width-30),
+      alignSelf : 'center'
     }
   });

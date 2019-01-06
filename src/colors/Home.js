@@ -1,4 +1,4 @@
-export const Home = {
+export const colorHome = {
     header  : "#222831",
     textHeader : "#eeeeee",
     touchable : "#b55400",

@@ -10,7 +10,7 @@ import {
   scaleVertical
 } from '../../utils';
 import {
-  Home
+  colorHome
 } from '../../colors'
 
 export default styles = StyleSheet.create({
@@ -21,12 +21,12 @@ export default styles = StyleSheet.create({
   },
   header: {
     height: 65,
-    backgroundColor: Home.header,
+    backgroundColor: colorHome.header,
     justifyContent: 'center',
     flexDirection: 'row'
   },
   textHeader: {
-    color: Home.textHeader,
+    color: colorHome.textHeader,
     fontWeight: '300',
     fontSize: 20
   },
@@ -44,7 +44,7 @@ export default styles = StyleSheet.create({
   },
   touchAdd: {
     position: 'absolute',
-    backgroundColor: Home.touchable,
+    backgroundColor: colorHome.touchable,
     right: 20,
     bottom: 20,
     height: 60,

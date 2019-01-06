@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Picker } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
-import { TextInputMask } from 'react-native-masked-text'
 
 import styles from './styles'
 import {
@@ -49,16 +48,7 @@ export class AddTransScreen extends Component {
             <View
               style={{ flexDirection: 'row', marginRight: 5, marginLeft: 15, backgroundColor: 'white' }}
             >
-              <TextInputMask
-                type={'money'}
-                keyboardType='numeric'
-                style={{ width: Dimensions.get("window").width - 30 }}
-                options={{
-                  precision: 0,
-                  unit: 'VND ',
-                  delimiter: ','
-                }}
-                underlineColorAndroid='black' />
+           
 
             </View>
 
