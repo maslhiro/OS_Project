@@ -10,10 +10,15 @@ import {
   Alert,
   Dimensions
 } from 'react-native';
+import {
+  StackActions,
+  NavigationActions,
+} from 'react-navigation';
 import styles from './styles';
 import img_Background from '../../assets/img_Background.jpg'
 import AwesomeAlert from 'react-native-awesome-alerts';
-
+import FastImage from 'react-native-fast-image'
+import {FirebaseAuth} from '../../configs'
 export class SignInScreen extends Component {
   constructor(props) {
     super(props);
@@ -47,13 +52,13 @@ export class SignInScreen extends Component {
           errPassword:false,
           isLoading: true
         }, () => {
-        //  this.onSignIn()
+         this.onSignIn()
          //  Test 
-          setTimeout(()=>{
-              this.setState({
-                isLoading:false
-              })
-          },3000)
+        //   setTimeout(()=>{
+        //       this.setState({
+        //         isLoading:false
+        //       })
+        //   },3000)
         })
         
     }
@@ -73,45 +78,51 @@ export class SignInScreen extends Component {
       });
   }
 
-  // onSignIn = (container) => {
-  //   FirebaseAuth.signInWithEmailAndPassword(this.state.txtEmail, this.state.txtPassword)
-  //     .then((data) => {
-  //       let user = container.checkUid_Exists(data.user.uid)
-  //       console.log("SIGN IN",user)
+  onSignIn = () => {
+    FirebaseAuth.signInWithEmailAndPassword(this.state.txtEmail, this.state.txtPassword)
+      .then((data) => {
+        let user = (data.user.uid)
+        console.log("SIGN IN",user)
 
-  //       if(user)
-  //       {
-  //         this.setState({
-  //           showAlert : 1,
-  //           isLoading:false,
-  //           linkAva : user.data.urlAvatar 
-  //         }, () =>
-  //         {
-  //           // FirebaseAuth.signOut()
-  //         })
-  //       }
-  //       else{
-  //         this.setState({
-  //           isLoading:false,
-  //           showAlert : 2
-  //         })
-  //       }
-  //     }).catch((error) => {
-  //           console.log("Err Sign In ", error)
-  //           this.setState({
-  //             isLoading:false,
-  //             showAlert:3,
-  //             errCode : error.message
-  //           })
-  //     })
-  // }
+        if(user)
+        {
+          this.setState({
+            showAlert : 1,
+            isLoading:false,
+            // linkAva : da 
+          }, () =>
+          {
+            // FirebaseAuth.signOut()
+          })
+        }
+        else{
+          this.setState({
+            isLoading:false,
+            showAlert : 2
+          })
+        }
+      }).catch((error) => {
+            console.log("Err Sign In ", error)
+            this.setState({
+              isLoading:false,
+              showAlert:3,
+              errCode : error.message
+            })
+      })
+  }
 
   onPress_Open_Sign_Up_Screen = () => {
-    this.props.navigation.push('SignUp');
+    
+
+    // this.props.navigation.push('SignUp');
   }
 
   onPress_Open_Home_Screen = () => {
-    this.props.navigation.push('Home');
+    let toStack = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: "Home" })],
+    });
+    this.props.navigation.dispatch(toStack);
   }
 
   renderAlert = () => {
@@ -190,10 +201,10 @@ export class SignInScreen extends Component {
 
         <View style={styles.overlayContainer}>
           <View style={styles.logoContainer}>
-              <Image
+              <FastImage
                 style={styles.logoStyle}
                 source={{uri:"https://uphinhnhanh.com/images/2018/12/17/Krown-Creatives.png"}}
-                resizeMode="cover"
+                resizeMode={FastImage.resizeMode.cover}
                 />
             
           </View>
@@ -238,9 +249,9 @@ export class SignInScreen extends Component {
         </ScrollView>
         
         <View style={styles.bottomContainer}>
-            <Text style={styles.textStyle} > Chưa đăng kí ? </Text>
+            <Text style={styles.textStyle} > Not Registered ? </Text>
             <TouchableOpacity onPress={()=>{this.onPress_Open_Sign_Up_Screen()}}>
-              <Text style={styles.textStyle} > Tạo tài khoản </Text>
+              <Text style={styles.textStyle} > Create Account </Text>
             </TouchableOpacity>
         </View>
 

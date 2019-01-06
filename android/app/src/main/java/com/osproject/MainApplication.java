@@ -1,4 +1,4 @@
-package com.os_project;
+package com.osproject;
 
 import android.app.Application;
 

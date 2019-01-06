@@ -1,4 +1,4 @@
-rootProject.name = 'OS_Project'
+rootProject.name = 'VindiApp'
 
 include ':app'
 

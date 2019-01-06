@@ -1,4 +1,4 @@
-package com.os_project;
+package com.osproject;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "OS_Project";
+        return "VindiApp";
     }
 }
