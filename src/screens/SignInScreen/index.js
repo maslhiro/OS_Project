@@ -112,9 +112,8 @@ export class SignInScreen extends Component {
   }
 
   onPress_Open_Sign_Up_Screen = () => {
-    
-
-    // this.props.navigation.push('SignUp');
+    console.log("User", FirebaseAuth.currentUser)
+    this.props.navigation.push('SignUp');
   }
 
   onPress_Open_Home_Screen = () => {
@@ -213,7 +212,7 @@ export class SignInScreen extends Component {
               <View style={{flex:1, marginVertical:12, marginHorizontal:20}}>              
                 <View style={{flex:1, backgroundColor: 'white', padding:5,  }}>
                   <Text style={{color:'black'}}>Username</Text>
-                  {this.state.errEmail?<Text style={styles.textErrStyle}>*Username không được để trống</Text>:null}
+                  {this.state.errEmail?<Text style={styles.textErrStyle}>*Username can not be empty or null</Text>:null}
                   <TextInput
                     style={styles.inputStyle}
                     defaultValue={this.state.txtEmail}
@@ -223,7 +222,7 @@ export class SignInScreen extends Component {
                   />
                 
                   <Text style={{color:'black'}}>Password</Text>
-                  {this.state.errPassword?<Text style={styles.textErrStyle}> *Password không được để trống </Text>:null}
+                  {this.state.errPassword?<Text style={styles.textErrStyle}> *Password can not be empty or null</Text>:null}
 
                   <TextInput
                     style={styles.inputStyle}

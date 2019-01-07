@@ -1,4 +1,4 @@
-import { HomeScreen,SplashScreen, MenuScreen, AddTransScreen, ArticlesScreen, InfoScreen, SignInScreen } from '../screens'
+import { HomeScreen,SplashScreen, MenuScreen, AddTransScreen, ArticlesScreen, InfoScreen, SignInScreen, SignUpScreen } from '../screens'
 
 import { createStackNavigator } from 'react-navigation'
 
@@ -11,7 +11,8 @@ export const Root = createStackNavigator(
         Info: InfoScreen,
         AddTrans : AddTransScreen,
         Articles : ArticlesScreen,
-        SignIn : SignInScreen
+        SignIn : SignInScreen,
+        SignUp : SignUpScreen
     }, {
         initialRouteName: 'SignIn',
         navigationOptions: {
