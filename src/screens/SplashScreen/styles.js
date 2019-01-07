@@ -13,7 +13,6 @@ export default styles = StyleSheet.create({
       flex: 1,
     },
     image: {
-      resizeMode: 'cover',
       height: scaleVertical(430),
     },
     text: {

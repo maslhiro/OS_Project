@@ -8,7 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  Dimensions
+  BackHandler
 } from 'react-native';
 import {
   StackActions,
@@ -18,7 +18,9 @@ import styles from './styles';
 import img_Background from '../../assets/img_Background.jpg'
 import AwesomeAlert from 'react-native-awesome-alerts';
 import FastImage from 'react-native-fast-image'
-import {FirebaseAuth} from '../../configs'
+import { FirebaseAuth } from '../../configs'
+
+
 export class SignInScreen extends Component {
   constructor(props) {
     super(props);
@@ -28,39 +30,54 @@ export class SignInScreen extends Component {
       txtPassword: "",
       errEmail: false,
       errPassword: false,
-      linkAva:"",
-      errCode:"",
+      linkAva: "",
+      errCode: "",
       showAlert: 0, // 1  - Thanh Cong / 2 - Sai Username-Pass / 3 - Loi Ket Noi
     };
   }
+  toHome = () => {
+    let toStack = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: "Home" })],
+    });
+    this.props.navigation.dispatch(toStack);
+    // this.props.navigation.goBack();
+  }
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      this.toHome(); // works best when the goBack is async
+      return true;
+    });
+  }
 
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
   checkData = () => {
-    if ( this.state.txtEmail==="" || this.state.txtPassword==="") 
-    {
+    if (this.state.txtEmail === "" || this.state.txtPassword === "") {
 
-        this.setState({
-          errEmail: !this.state.txtEmail,
-          errPassword: !this.state.txtPassword
-        })  
+      this.setState({
+        errEmail: !this.state.txtEmail,
+        errPassword: !this.state.txtPassword
+      })
     }
-    else 
-    {
-     
+    else {
+
       this.setState(
         {
           errEmail: false,
-          errPassword:false,
+          errPassword: false,
           isLoading: true
         }, () => {
-         this.onSignIn()
-         //  Test 
-        //   setTimeout(()=>{
-        //       this.setState({
-        //         isLoading:false
-        //       })
-        //   },3000)
+          this.onSignIn()
+          //  Test 
+          //   setTimeout(()=>{
+          //       this.setState({
+          //         isLoading:false
+          //       })
+          //   },3000)
         })
-        
+
     }
   }
 
@@ -82,32 +99,30 @@ export class SignInScreen extends Component {
     FirebaseAuth.signInWithEmailAndPassword(this.state.txtEmail, this.state.txtPassword)
       .then((data) => {
         let user = (data.user.uid)
-        console.log("SIGN IN",user)
+        console.log("SIGN IN", user)
 
-        if(user)
-        {
+        if (user) {
           this.setState({
-            showAlert : 1,
-            isLoading:false,
+            showAlert: 1,
+            isLoading: false,
             // linkAva : da 
-          }, () =>
-          {
-            // FirebaseAuth.signOut()
-          })
+          }, () => {
+              // FirebaseAuth.signOut()
+            })
         }
-        else{
+        else {
           this.setState({
-            isLoading:false,
-            showAlert : 2
+            isLoading: false,
+            showAlert: 2
           })
         }
       }).catch((error) => {
-            console.log("Err Sign In ", error)
-            this.setState({
-              isLoading:false,
-              showAlert:3,
-              errCode : error.message
-            })
+        console.log("Err Sign In ", error)
+        this.setState({
+          isLoading: false,
+          showAlert: 3,
+          errCode: error.message
+        })
       })
   }
 
@@ -125,57 +140,56 @@ export class SignInScreen extends Component {
   }
 
   renderAlert = () => {
-    switch(this.state.showAlert)
-    {
-      case 0 :{
+    switch (this.state.showAlert) {
+      case 0: {
         return null
         break
       }
-      case 1 : {
-        return(
+      case 1: {
+        return (
           <AwesomeAlert
             show={true}
             title="Chúc Mừng !"
             message="Bạn đã đăng nhập thành công ^^"
             confirmText=" OK "
             closeOnTouchOutside={false}
-            onConfirmPressed={()=>this.setState({showAlert:0},()=>this.onPress_Open_Home_Screen())}
+            onConfirmPressed={() => this.setState({ showAlert: 0 }, () => this.onPress_Open_Home_Screen())}
             closeOnHardwareBackPress={false}
             showCancelButton={false}
             showConfirmButton={true}
           />
-          )
+        )
         break
       }
       case 2: {
         return (
-            <AwesomeAlert
-              show={true}
-              title="Opps !"
-              message="Username hoặc mật khẩu không chính xác:<"
-              confirmText=" OK "
-              closeOnTouchOutside={false}
-              onConfirmPressed={()=>this.setState({showAlert:0})}
-              closeOnHardwareBackPress={false}
-              showCancelButton={false}
-              showConfirmButton={true}
-            />
+          <AwesomeAlert
+            show={true}
+            title="Opps !"
+            message="Username hoặc mật khẩu không chính xác:<"
+            confirmText=" OK "
+            closeOnTouchOutside={false}
+            onConfirmPressed={() => this.setState({ showAlert: 0 })}
+            closeOnHardwareBackPress={false}
+            showCancelButton={false}
+            showConfirmButton={true}
+          />
         )
         break
-      } 
+      }
       case 3: {
         return (
-            <AwesomeAlert
-              show={true}
-              title="Opps!"
-              message={this.state.errCode}
-              confirmText=" OK "
-              closeOnTouchOutside={false}
-              onConfirmPressed={()=>this.setState({showAlert:0})}
-              closeOnHardwareBackPress={false}
-              showCancelButton={false}
-              showConfirmButton={true}
-            />
+          <AwesomeAlert
+            show={true}
+            title="Opps!"
+            message={this.state.errCode}
+            confirmText=" OK "
+            closeOnTouchOutside={false}
+            onConfirmPressed={() => this.setState({ showAlert: 0 })}
+            closeOnHardwareBackPress={false}
+            showCancelButton={false}
+            showConfirmButton={true}
+          />
         )
         break
       }
@@ -190,84 +204,84 @@ export class SignInScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <ImageBackground
-        source={img_Background}
-        style={styles.backgroundContainer}>
-        <ScrollView 
-          style={{flex:1}}
-          showsVerticalScrollIndicator={false}
+        <ImageBackground
+          source={img_Background}
+          style={styles.backgroundContainer}>
+          <ScrollView
+            style={{ flex: 1 }}
+            showsVerticalScrollIndicator={false}
           >
 
-        <View style={styles.overlayContainer}>
-          <View style={styles.logoContainer}>
-              <FastImage
-                style={styles.logoStyle}
-                source={{uri:"https://uphinhnhanh.com/images/2018/12/17/Krown-Creatives.png"}}
-                resizeMode={FastImage.resizeMode.cover}
+            <View style={styles.overlayContainer}>
+              <View style={styles.logoContainer}>
+                <FastImage
+                  style={styles.logoStyle}
+                  source={{ uri: "https://uphinhnhanh.com/images/2018/12/17/Krown-Creatives.png" }}
+                  resizeMode={FastImage.resizeMode.cover}
                 />
-            
-          </View>
-          
-          <View style={styles.inputContainer}>
-              <View style={{flex:1, marginVertical:12, marginHorizontal:20}}>              
-                <View style={{flex:1, backgroundColor: 'white', padding:5,  }}>
-                  <Text style={{color:'black'}}>Username</Text>
-                  {this.state.errEmail?<Text style={styles.textErrStyle}>*Username can not be empty or null</Text>:null}
-                  <TextInput
-                    style={styles.inputStyle}
-                    defaultValue={this.state.txtEmail}
-                    autoCorrect={false}
-                    underlineColorAndroid="#679186"
-                    onChangeText={text => this.onChangeText_Email(text)}
-                  />
-                
-                  <Text style={{color:'black'}}>Password</Text>
-                  {this.state.errPassword?<Text style={styles.textErrStyle}> *Password can not be empty or null</Text>:null}
 
-                  <TextInput
-                    style={styles.inputStyle}
-                    defaultValue={this.state.txtPassword}
-                    secureTextEntry={true}
-                    autoCorrect={false}
-                    underlineColorAndroid="#679186"
-                    onChangeText={text => this.onChangeText_Pass(text)}
-                  /> 
-                </View>
               </View>
 
-              <TouchableOpacity 
-                  style={styles.touchStyle}
-                  onPress={()=>{ this.checkData()}}>
-                  <Text style={styles.textTouchStyle}> Sign In </Text>
-                </TouchableOpacity> 
-          
-          </View>
+              <View style={styles.inputContainer}>
+                <View style={{ flex: 1, marginVertical: 12, marginHorizontal: 20 }}>
+                  <View style={{ flex: 1, backgroundColor: 'white', padding: 5, }}>
+                    <Text style={{ color: 'black' }}>Username</Text>
+                    {this.state.errEmail ? <Text style={styles.textErrStyle}>*Username can not be empty or null</Text> : null}
+                    <TextInput
+                      style={styles.inputStyle}
+                      defaultValue={this.state.txtEmail}
+                      autoCorrect={false}
+                      underlineColorAndroid="#679186"
+                      onChangeText={text => this.onChangeText_Email(text)}
+                    />
 
-        </View>
-      
-        </ScrollView>
-        
-        <View style={styles.bottomContainer}>
+                    <Text style={{ color: 'black' }}>Password</Text>
+                    {this.state.errPassword ? <Text style={styles.textErrStyle}> *Password can not be empty or null</Text> : null}
+
+                    <TextInput
+                      style={styles.inputStyle}
+                      defaultValue={this.state.txtPassword}
+                      secureTextEntry={true}
+                      autoCorrect={false}
+                      underlineColorAndroid="#679186"
+                      onChangeText={text => this.onChangeText_Pass(text)}
+                    />
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.touchStyle}
+                  onPress={() => { this.checkData() }}>
+                  <Text style={styles.textTouchStyle}> Sign In </Text>
+                </TouchableOpacity>
+
+              </View>
+
+            </View>
+
+          </ScrollView>
+
+          <View style={styles.bottomContainer}>
             <Text style={styles.textStyle} > Not Registered ? </Text>
-            <TouchableOpacity onPress={()=>{this.onPress_Open_Sign_Up_Screen()}}>
+            <TouchableOpacity onPress={() => { this.onPress_Open_Sign_Up_Screen() }}>
               <Text style={styles.textStyle} > Create Account </Text>
             </TouchableOpacity>
-        </View>
+          </View>
 
-        <AwesomeAlert
+          <AwesomeAlert
             show={this.state.isLoading}
             showProgress={true}
             title="Loading !"
-            message="Bạn đợi tí nhé ^^"
+            message="Please wait ..."
             closeOnTouchOutside={false}
             closeOnHardwareBackPress={false}
             showCancelButton={false}
             showConfirmButton={false}
           />
-        {this.renderAlert()}
+          {this.renderAlert()}
 
-      </ImageBackground>
-    </View>
+        </ImageBackground>
+      </View>
     );
   }
 
