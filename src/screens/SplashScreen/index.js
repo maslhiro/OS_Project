@@ -17,7 +17,8 @@ import {ProgressBar} from '../../components'
 import styles from './styles'
 import { scale, scaleVertical } from '../../utils';
 import {Splash} from '../../colors'
-
+import FastImage from 'react-native-fast-image'
+import img_SpashScreen from '../../assets/img_SpashScreen.jpg'
 const delay = 700;
 const uriImg = "https://i.pinimg.com/564x/8e/dc/d1/8edcd15480855eaf0f4a1bb9f319c95b.jpg"
 
@@ -62,9 +63,9 @@ export class SplashScreen extends Component {
   render = () => (
     <View style={styles.container}>
        <View>
-        <Image
+        <FastImage
           style={[styles.image, { width: Dimensions.get('window').width }]}
-          source={{uri:uriImg}}
+          source={img_SpashScreen}
         />
         <View style={styles.text}>
           <Text  style={styles.hero}>React Native</Text>
