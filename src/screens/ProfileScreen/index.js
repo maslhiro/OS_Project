@@ -215,7 +215,6 @@ export class ProfileScreen extends Component {
       return true;
     });
 
-    if(this.state.uid)
     objectsRef.on("value", (child) => {
       let data = []
         child.forEach((item)=>{

@@ -62,7 +62,7 @@ export class MenuScreen extends Component {
 
                         disabled={!this.checkSignIn()}
                         style={styles.button}
-                        onPress={() => { FirebaseAuth.signOut() }}>
+                        onPress={() => { FirebaseAuth.signOut().then(()=>alert("Log Out Successful")) }}>
                         <Icon name="ios-log-out" color="black" size={40} />
                         <Text style={styles.text}>Log Out</Text>
                     </TouchableOpacity>

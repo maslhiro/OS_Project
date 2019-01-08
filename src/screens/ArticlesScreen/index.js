@@ -18,7 +18,7 @@ export class ArticlesScreen extends Component {
         super(props)
         this.state = {
             data: [],
-            isLoading: false,
+            isLoading: true,
             uid : FirebaseAuth.currentUser ? FirebaseAuth.currentUser.uid : ""
         }
     }
@@ -31,6 +31,7 @@ export class ArticlesScreen extends Component {
     }
 
     renderItem = (item) => {
+        if(item.isActivated=="true")
         return (
             <TouchableOpacity
                 onPress={() => this.props.navigation.push("Info", { data: item.key })}
@@ -84,6 +85,8 @@ export class ArticlesScreen extends Component {
                 </View>
 
                 <FlatList
+                    removeClippedSubviews
+                    disableVirtualization
                     data={this.state.data}
                     keyExtractor={(item) => item.idObject}
                     renderItem={({ item }) => this.renderItem(item)} />

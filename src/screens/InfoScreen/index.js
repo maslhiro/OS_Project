@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, TextInput, ScrollView, Image, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, ScrollView, BackHandler, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import styles from './styles'
@@ -7,6 +7,7 @@ import {
   StackActions,
   NavigationActions,
 } from 'react-navigation';
+import { Badge } from 'react-native-elements'
 import Lightbox from 'react-native-lightbox';
 import { ImageProgress } from '../../components'
 import { objectsRef, FirebaseAuth } from '../../configs'
@@ -16,8 +17,8 @@ export class InfoScreen extends Component {
     this.state = {
       uid: FirebaseAuth.currentUser ? FirebaseAuth.currentUser.uid : "",
       // uid : "11",
-      data:{
-        userFavo : []
+      data: {
+        userFavo: []
       }
     }
   }
@@ -32,9 +33,8 @@ export class InfoScreen extends Component {
   }
 
   checkFollow = () => {
-    if (this.state.uid) 
-    {
-      if(this.checkUserFavo()) this.unFollow()
+    if (this.state.uid) {
+      if (this.checkUserFavo()) this.unFollow()
       else this.onFollow()
     }
     else this.askSignIn()
@@ -65,15 +65,15 @@ export class InfoScreen extends Component {
   }
 
   checkUserFavo = () => {
-    console.log("Check favo",this.state.data.userFavo.indexOf(this.state.uid))
+    console.log("Check favo", this.state.data.userFavo.indexOf(this.state.uid))
     if (this.state.data.userFavo.indexOf(this.state.uid) != -1)
       return true
     return false
-    
+
   }
 
   onFollow = () => {
-    
+
     objectsRef.child(this.state.data.key).child("userFavo").child(this.state.uid).set("Uid")
   }
 
@@ -82,7 +82,7 @@ export class InfoScreen extends Component {
   }
 
   render() {
-    let {data} = this.state
+    let { data } = this.state
 
     return (
       <View style={styles.container}>
@@ -108,9 +108,17 @@ export class InfoScreen extends Component {
           </Lightbox>
           <View style={{ margin: 10, backgroundColor: 'white' }}>
             <Text style={{ fontSize: 20, fontWeight: '500', color: 'black' }}>{data.name}</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Badge containerStyle={{ backgroundColor: '#393e46' }}>
+                <Text style={{ color: 'white' }}>{data.nameType}</Text>
+              </Badge>
+              <Badge containerStyle={{ backgroundColor: '#393e46' }}>
+                <Text style={{ color: 'white' }}>{data.nameMuseum}</Text>
+              </Badge>
+            </View>
             <Text style={{ fontSize: 18, color: 'black' }}>Description : </Text>
             <Text style={{ fontSize: 18, color: 'black' }}>{data.description}</Text>
-          </View> 
+          </View>
 
 
         </View>
@@ -118,14 +126,13 @@ export class InfoScreen extends Component {
           <TouchableOpacity
             onPress={() => { this.checkFollow() }}
             style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-            <Icon name="ios-heart" color={this.checkUserFavo()?"red":"black"} size={30} />
+            <Icon name="ios-heart" color={this.checkUserFavo() ? "red" : "black"} size={30} />
             <Text style={{ color: 'red' }}>  {data.userFavo.length} </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { this.unFollow() }}
+            onPress={() => { this.props.navigation.push("Comment", { data: this.props.navigation.getParam("data") }) }}
             style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
             <Icon name="ios-chatboxes" color="black" size={30} />
-            <Text style={{ color: 'black' }}> 10 </Text>
           </TouchableOpacity>
         </View>
 
@@ -133,27 +140,33 @@ export class InfoScreen extends Component {
     )
   }
 
-  componentDidMount () {
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    })
     let idObj = this.props.navigation.getParam("data")
     // let idObj = "-LTaCm5-yAfUYX9Pfg16"
-    objectsRef.child(idObj).on("value",(child)=>{
+    objectsRef.child(idObj).on("value", (child) => {
       let da = child.toJSON()
       da.key = child.key
-      if(da.userFavo)
-      {
-          console.log("Obj",Object.keys(da.userFavo))
-          da.userFavo = Object.keys(da.userFavo)
+      if (da.userFavo) {
+        console.log("Obj", Object.keys(da.userFavo))
+        da.userFavo = Object.keys(da.userFavo)
       }
-      else 
-      {
-          da.userFavo = []
+      else {
+        da.userFavo = []
       }
       this.setState({
-        isLoading : false,
-        data:da
+        isLoading: false,
+        data: da
       })
-     
+
     }
     )
+  }
+
+
+  componentWillUnmount() {
+    this.backHandler.remove();
   }
 }

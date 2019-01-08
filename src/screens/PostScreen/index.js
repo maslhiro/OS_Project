@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import styles from "./styles.js";
 import FastImage from 'react-native-fast-image'
-import { objectsRef, UserUpdateRefStorage, MixRef } from "./../../configs";
+import { objectsRef, UserUpdateRefStorage, MixRef, FirebaseAuth } from "./../../configs";
 import Icon from 'react-native-vector-icons/Ionicons'
 import AwesomeAlert from "react-native-awesome-alerts";
 import img_Background from '../../assets/img_Background.jpg'
@@ -30,6 +30,7 @@ export class PostScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      uid : FirebaseAuth.currentUser ? FirebaseAuth.currentUser.uid : "",
       isLoading: false,
       showAlert: 0,
       errCode: "",
@@ -40,10 +41,6 @@ export class PostScreen extends Component {
       uriImg: defaultUri,
       arrType:[],
       arrMuseum:[],
-      // idType: this.props.navigation.getParam("idType") ? this.props.navigation.getParam("idType") : "",
-      // idMuseum: this.props.navigation.getParam("idMuseum") ? this.props.navigation.getParam("idMuseum") : "",
-      idType: "T007",
-      idMuseum: "M001"
     };
   }
 
@@ -133,7 +130,7 @@ export class PostScreen extends Component {
         name: this.state.txtTitle,
         description: this.state.txtDescription,
         linkImg: this.state.linkImg,
-        isActivated: "true"
+        isActivated: "false"
       },
       (error) => {
         if (error) {
@@ -167,7 +164,7 @@ export class PostScreen extends Component {
     }))
   }
 
-  renderAlert = (container) => {
+  renderAlert = () => {
     switch (this.state.showAlert) {
       case 0: {
         return null
@@ -182,7 +179,7 @@ export class PostScreen extends Component {
             confirmText=" OK "
             closeOnTouchOutside={false}
             onConfirmPressed={() => {
-              this.props.navigation.push('Home')
+              this.toHome()
             }}
             closeOnHardwareBackPress={false}
             showCancelButton={false}
@@ -273,7 +270,9 @@ export class PostScreen extends Component {
           <View style={styles.viewHeader}>
             <Text style={styles.textHeader}>Post</Text>
           </View>
-          <TouchableOpacity style={styles.touchHeader}>
+          <TouchableOpacity 
+            onPress={()=>this.checkCompleted()}
+            style={styles.touchHeader}>
             <Icon name="ios-checkmark" size={50} color="white" />
           </TouchableOpacity>
         </View>
@@ -363,9 +362,9 @@ export class PostScreen extends Component {
           closeOnTouchOutside={false}
           closeOnHardwareBackPress={false}
         />
-        {/*        
+               
             {this.renderAlert()}
-        */}
+       
       </View>
     );
   }
