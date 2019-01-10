@@ -1,2 +1,2 @@
 # OS_Project
-Open Source Project - Finance App :rainbow:
+Open Source Project - Museum App :rainbow:
